@@ -1,36 +1,63 @@
-void lineasCentro(){
- line(600, 0, 600, 400);
- line(400, 200, 800, 200);
- line(400, 0, 800, 400);
- line(400, 400, 800, 0);
- line(500, 400, 700, 0);
- line(500, 0, 700, 400);
- line(400, 100, 800, 300);
- line(400, 300, 800, 100);
+int LoadImage;
+PImage mi_imagen;
+int posX;
+int posY;
+int grosor;
+
+void lineasCentro() {
+pushMatrix();
+translate(600, 200);
+for ( int repite = 0; repite<15; repite++ ) {
+  for (int i=0; i<10; i++) {
+    line(0, 0, 300, map(i, 0, 9, -200, 200));
+  }
+  rotate(radians(95));
 }
-void setup() 
+popMatrix();
+  }
+
+void elipsis(int num, int col, int ancho){
+  strokeWeight(ancho);
+  noFill();
+  stroke(col+20, 60, col);
+  ellipse(600, 200, num+posX, num+posY);
+  stroke(col-20, 60, col-10);
+  ellipse(600, 200, num+5+ancho+posX, num+5+ancho+posY);
+}
+
+void setup()
 {
-  background (255);
   size(800, 400);
- loadImage("opart.jpg");
-    PImage mi_imagen;
- mi_imagen= loadImage ("opart.jpg");
- image(mi_imagen, 0, 0, 400, 400);
 }
- void draw() {
-   stroke(0);
-   noFill();
-  stroke(0);
-  strokeWeight(0.5);
- lineasCentro ();
- //lineas (i+150, 50);
-  stroke(255);
-  strokeWeight(110);
-  ellipse(600, 200, 180, 180);
-  rect(450, 50, 300, 300);
-  stroke(0);
-  strokeWeight(0.5);
- //line(400,200,150+(i*150),150);
-//line(400,200,50,300+(i*150));
+
+void draw() {
+  background(250);
+  if (mouseX<400) {
+    posX = 0;
+    posY =0;
+    grosor=2;
+    strokeWeight(3);
+
+  } else
+  {
+    posX= mouseX-400;
+    posY= mouseY;
+float m =dist(mouseX, mouseY, 600, 200);
+int grosor = round(map(m, 0, 600, 0, 50));
+  strokeWeight(grosor);
+  }
+      stroke(0);
+  lineasCentro ();
+  fill(150, 0, 120);
+  noStroke();
+  ellipse(600, 200, 70, 80);
+  elipsis(120, 180, 7);
+  elipsis(200, 150, 12);
+  strokeWeight(27);
+  stroke(100, 60, 140);
+  ellipse(600, 200, 310+posX, 320+posY);
+  fill(0);
+
+  mi_imagen= loadImage ("data.png");
+  image(mi_imagen, 0, 0, 400, 400);
 }
- 
